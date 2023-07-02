@@ -1,0 +1,32 @@
+- hosts: all
+  tasks:
+   - name: create directory
+     file:
+       path: "{{ node }}/config"
+       state: directory
+
+   - name: copy a file
+     copy:
+       src: "{{ filename }}"
+       dest: "{{ node }}/config"
+
+- hosts: app
+  become: yes
+  tasks:
+   - name: install app packages
+     yum:
+       name: tomcat9
+       state: latest
+
+
+- hosts: web
+  become: yes
+  tasks:
+   - name: install web packages
+     yum:
+       name: nginx
+       state: latest
+   - name: manage nginx service
+     service:
+       name: nginx
+       state: "{{ nginxstate }}"

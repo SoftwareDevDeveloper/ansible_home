@@ -1,0 +1,3 @@
+node: web
+filename: web.config
+nginxstate: started
